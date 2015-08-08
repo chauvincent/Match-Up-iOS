@@ -99,17 +99,17 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yuB-Jd-fue">
                                 <rect key="frame" x="290" y="139" width="20" height="20"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MFo-SD-RBN">
-                                <rect key="frame" x="221" y="508" width="158" height="24"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1N-en-Ty6">
+                                <rect key="frame" x="212" y="461" width="177" height="104"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="158" id="Gry-wr-3Mk"/>
-                                    <constraint firstAttribute="height" constant="24" id="cZB-2l-bYY"/>
+                                    <constraint firstAttribute="height" constant="104" id="4q0-X6-Bvf"/>
+                                    <constraint firstAttribute="width" constant="177" id="htP-hK-BQH"/>
                                 </constraints>
                                 <state key="normal" title="Login With Facebook">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginButtonPressed:" destination="wrC-Eq-ekj" eventType="touchUpInside" id="MUi-t0-9C9"/>
+                                    <action selector="loginButtonPressed:" destination="wrC-Eq-ekj" eventType="touchUpInside" id="auJ-pI-cTq"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -117,14 +117,14 @@
                         <constraints>
                             <constraint firstItem="yuB-Jd-fue" firstAttribute="centerX" secondItem="Wkq-Ox-F9j" secondAttribute="centerX" id="7cm-rE-S1d"/>
                             <constraint firstItem="yuB-Jd-fue" firstAttribute="top" secondItem="Ess-b7-Tlb" secondAttribute="bottom" constant="75" id="JMr-qf-7gi"/>
-                            <constraint firstItem="MFo-SD-RBN" firstAttribute="centerX" secondItem="yuB-Jd-fue" secondAttribute="centerX" id="Nym-0x-Jfl"/>
-                            <constraint firstItem="faK-j5-sVd" firstAttribute="top" secondItem="MFo-SD-RBN" secondAttribute="bottom" constant="68" id="g0e-bX-eS8"/>
+                            <constraint firstItem="faK-j5-sVd" firstAttribute="top" secondItem="z1N-en-Ty6" secondAttribute="bottom" constant="35" id="Vku-jR-cdQ"/>
+                            <constraint firstItem="z1N-en-Ty6" firstAttribute="centerX" secondItem="yuB-Jd-fue" secondAttribute="centerX" id="w3q-dS-bGp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7Zy-WK-frF"/>
                     <connections>
                         <outlet property="activityIndicator" destination="yuB-Jd-fue" id="QRG-J1-8xm"/>
-                        <segue destination="49e-Tb-3d3" kind="show" identifier="ToTabBarSegue" id="Nlg-V6-EoN"/>
+                        <segue destination="49e-Tb-3d3" kind="show" identifier="TabBarSegue" id="Nlg-V6-EoN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jIb-WF-gLe" userLabel="First Responder" sceneMemberID="firstResponder"/>

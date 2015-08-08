@@ -18,13 +18,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.activityIndicator.hidden = YES;
+    
+ 
     // Do any additional setup after loading the view.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
 
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation
@@ -39,7 +48,28 @@
 #pragma mark - IBActions
 - (IBAction)loginButtonPressed:(id)sender
 {
+    NSArray *permissionsArray = @[ @"public_profile", @"user_friends"];
+  
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+    
+    [PFFacebookUtils logInInBackgroundWithReadPermissions:permissionsArray block:^(PFUser *user, NSError *error)
+    {
+        [self.activityIndicator stopAnimating];
+        self.activityIndicator.hidden = YES;
+        if (!user)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cancel Button Pressed" message:@"Please sign-up or try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+            [alertView show];
+        } else
+        {
+            [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
+        }
+    }];
+    
+    
+
+
 
 }
-
 @end
