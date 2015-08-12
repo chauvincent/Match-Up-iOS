@@ -29,7 +29,7 @@
     [super viewDidAppear:YES];
     if ([PFUser currentUser] && [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
         [self updateUserInformation]; // update new facebook info
-        [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
+        [self performSegueWithIdentifier:@"ToHomeSegue" sender:self];
         
     }
     
@@ -79,7 +79,7 @@
          else
          {
              [self updateUserInformation];
-             [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
+             [self performSegueWithIdentifier:@"ToHomeSegue" sender:self];
          }
      }];
     

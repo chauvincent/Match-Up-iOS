@@ -17,6 +17,8 @@
 		759725FA1B7758BF00B6ACD6 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 759725F91B7758BF00B6ACD6 /* Constants.m */; };
 		759726001B7B496900B6ACD6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759725FF1B7B496900B6ACD6 /* HomeViewController.m */; };
 		759726041B7B4CE700B6ACD6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759726031B7B4CE700B6ACD6 /* SettingsViewController.m */; };
+		759726081B7B5FF000B6ACD6 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759726071B7B5FF000B6ACD6 /* EditProfileViewController.m */; };
+		7597260C1B7B63A900B6ACD6 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7597260B1B7B63A900B6ACD6 /* ProfileViewController.m */; };
 		C31879E209422FBBE226C3EB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B3747DBE0BA8DA4A26270C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +54,10 @@
 		759725FF1B7B496900B6ACD6 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		759726021B7B4CE700B6ACD6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		759726031B7B4CE700B6ACD6 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		759726061B7B5FF000B6ACD6 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		759726071B7B5FF000B6ACD6 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		7597260A1B7B63A900B6ACD6 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		7597260B1B7B63A900B6ACD6 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		A4B3747DBE0BA8DA4A26270C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE59B481E20B4B20E5DBA8D5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,9 +103,9 @@
 			children = (
 				7502BFF41B760933007D18EF /* MatchUp */,
 				7502C0111B760933007D18EF /* MatchUpTests */,
-				7502BFF31B760933007D18EF /* Products */,
-				40DCE877B7D54E84B155DB8D /* Pods */,
 				5942CE6FD32F617A51556A67 /* Frameworks */,
+				40DCE877B7D54E84B155DB8D /* Pods */,
+				7502BFF31B760933007D18EF /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,16 +121,18 @@
 		7502BFF41B760933007D18EF /* MatchUp */ = {
 			isa = PBXGroup;
 			children = (
-				759726011B7B4CD800B6ACD6 /* Settings */,
-				759725FC1B7B48FD00B6ACD6 /* Home */,
 				7502BFF91B760933007D18EF /* AppDelegate.h */,
 				7502BFFA1B760933007D18EF /* AppDelegate.m */,
+				7502C0021B760933007D18EF /* Main.storyboard */,
+				759726091B7B639C00B6ACD6 /* Profile */,
+				759726051B7B5FD700B6ACD6 /* Edit Profile */,
+				759726011B7B4CD800B6ACD6 /* Settings */,
+				759725FC1B7B48FD00B6ACD6 /* Home */,
 				759725F81B7758BF00B6ACD6 /* Constants.h */,
 				759725F91B7758BF00B6ACD6 /* Constants.m */,
 				7502C0051B760933007D18EF /* Images.xcassets */,
 				7502C0071B760933007D18EF /* LaunchScreen.xib */,
 				759725FB1B7B48E300B6ACD6 /* Login */,
-				7502C0021B760933007D18EF /* Main.storyboard */,
 				7502BFF51B760933007D18EF /* Supporting Files */,
 			);
 			path = MatchUp;
@@ -182,6 +190,24 @@
 				759726031B7B4CE700B6ACD6 /* SettingsViewController.m */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		759726051B7B5FD700B6ACD6 /* Edit Profile */ = {
+			isa = PBXGroup;
+			children = (
+				759726061B7B5FF000B6ACD6 /* EditProfileViewController.h */,
+				759726071B7B5FF000B6ACD6 /* EditProfileViewController.m */,
+			);
+			name = "Edit Profile";
+			sourceTree = "<group>";
+		};
+		759726091B7B639C00B6ACD6 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7597260A1B7B63A900B6ACD6 /* ProfileViewController.h */,
+				7597260B1B7B63A900B6ACD6 /* ProfileViewController.m */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,6 +347,8 @@
 			files = (
 				7502BFFB1B760933007D18EF /* AppDelegate.m in Sources */,
 				7502BFF81B760933007D18EF /* main.m in Sources */,
+				7597260C1B7B63A900B6ACD6 /* ProfileViewController.m in Sources */,
+				759726081B7B5FF000B6ACD6 /* EditProfileViewController.m in Sources */,
 				7502C0201B7609B4007D18EF /* LoginViewController.m in Sources */,
 				759726041B7B4CE700B6ACD6 /* SettingsViewController.m in Sources */,
 				759726001B7B496900B6ACD6 /* HomeViewController.m in Sources */,
