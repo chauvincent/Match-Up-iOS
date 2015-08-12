@@ -11,6 +11,7 @@
 @interface LoginViewController ()
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) NSMutableData *imageData;
 
 @end
 
@@ -23,13 +24,18 @@
  
     // Do any additional setup after loading the view.
 }
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
-
+    [super viewDidAppear:YES];
+    if ([PFUser currentUser] && [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+        [self updateUserInformation]; // update new facebook info
+        [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
+        
+    }
     
 }
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -84,36 +90,45 @@
 {
     if ([FBSDKAccessToken currentAccessToken])
     {
-        #pragma mark - Need To Request Facebook Approval for Permissions: need location, interests, and birthday. A temporary Location will be used 'San Francisco'
-        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields" : @"id,age_range,first_name,locale,gender,last_name"}];
+       /* NOTE: Need To Request Facebook Approval for Permissions: need location, interests, and birthday. A temporary Location will be used 'San Francisco'  */
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields" : @"name,age_range,first_name,locale,gender,last_name"}];
         
         [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error)
          {
              if (!error)
              {
-                 NSDictionary *userDictionary = (NSDictionary*)result;
-                 NSMutableDictionary *userProfile = [[NSMutableDictionary alloc] initWithCapacity:8];
-                 if (userDictionary[@"id"]) {
-                     userProfile[@"id"] = userDictionary[@"id"];
-                    
+                
+                NSDictionary *userDictionary = (NSDictionary*)result;
+                NSMutableDictionary *userProfile = [[NSMutableDictionary alloc] initWithCapacity:8];
+                 
+                 //create URL
+                 NSString *facebookID = userDictionary[@"id"];
+                 NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+                 
+                 if (userDictionary[@"name"]) {
+                     userProfile[kUserProfileNameKey] = userDictionary[@"name"];
                  }
                  if (userDictionary[@"first_name"]) {
-                     userProfile[@"first_name"] = userDictionary[@"first_name"];
+                     userProfile[kUserProfileFirstNameKey] = userDictionary[@"first_name"];
                  
                  }
                  if (userDictionary[@"gender"]) {
-                     userProfile[@"gender"] = userDictionary[@"gender"];
+                     userProfile[kUserProfileGenderKey] = userDictionary[@"gender"];
               
                  }
                  if (userDictionary[@"age_range"]) {
-                     userProfile[@"age_range"] = userDictionary[@"age_range"];
+                     userProfile[kUserProfileAgeRangeKey] = userDictionary[@"age_range"];
                  }
                  //temporary location until facebook approval
-                 [userProfile setObject:@"San Francisco" forKey:@"location"];
-                 //NSLog(@"%@", userProfile);
+                 userProfile[@"location"] = @"San Francisco";
                  
-                 [[PFUser currentUser] setObject:userProfile forKey:@"profile"];
+                 if ([pictureURL absoluteString]) {
+                     userProfile[kUserProfilePictureURL] = [pictureURL absoluteString];
+                 }
+                 //NSLog(@"%@", userProfile);
+                 [[PFUser currentUser] setObject:userProfile forKey:kUserProfileKey];
                  [[PFUser currentUser] saveInBackground];
+                 [self requestImage];
              }
              else
              {
@@ -122,5 +137,63 @@
          }];
     }
 }
+
+-(void)uploadPFFileToParse:(UIImage *)image
+{
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    if ( !imageData)
+    {
+        NSLog(@"image data not found");
+        return;
+    }
+    
+    PFFile *photoFile = [PFFile fileWithData:imageData];
+    
+    [photoFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         PFObject *photo = [PFObject objectWithClassName:kPhotoClassKey];
+         [photo setObject:[PFUser currentUser] forKey:kPhotoUserKey];
+         [photo setObject:photoFile forKey:kPhotoPictureKey];
+         [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             NSLog(@"Photo Saved");
+         }];
+     }];
+}
+-(void)requestImage
+{
+    // get all photo back from parse
+    PFQuery *query = [PFQuery queryWithClassName:kPhotoClassKey];
+    [query whereKey:kPhotoUserKey equalTo:[PFUser currentUser]];
+    
+    [query countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+    {
+        if (number == 0)
+        {
+            PFUser *user = [PFUser currentUser];
+            self.imageData = [[NSMutableData alloc] init];
+            
+            NSURL *pictureProfileURL = [NSURL URLWithString:user[kUserProfileKey][kUserProfilePictureURL]];
+            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:pictureProfileURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:4.0f];
+            NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+            if (!urlConnection)
+            {
+                NSLog(@"Failed to Download Picture");
+            }
+        }
+    }];
+}
+
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [self.imageData appendData:data];
+}
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    UIImage *profileImage = [UIImage imageWithData:self.imageData];
+    [self uploadPFFileToParse:profileImage];
+}
+
+
 
 @end

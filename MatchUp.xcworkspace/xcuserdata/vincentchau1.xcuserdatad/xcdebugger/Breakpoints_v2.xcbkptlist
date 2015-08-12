@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MatchUp/LoginViewController.m"
-            timestampString = "460737080.472839"
+            timestampString = "461051798.163363"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "-loginButtonPressed:"
             landmarkType = "5">
          </BreakpointContent>
