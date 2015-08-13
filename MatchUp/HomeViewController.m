@@ -111,7 +111,11 @@
 -(void)updateView
 {
     self.firstNameLabel.text = self.photo[@"user"][@"profile"][@"firstName"];
-    self.ageLabel.text = [NSString stringWithFormat:@"%@",self.photo[@"user"][@"profile"][@"age"]];
+    self.ageLabel.text = [NSString stringWithFormat:@"%@",self.photo[@"user"][@"profile"][kUserProfileAgeKey]];
+
+    
+    
+    
     self.taglineLabel.text = self.photo[@"user"][@"tagLine"];
 }
 

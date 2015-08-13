@@ -128,10 +128,10 @@
                  userProfile[kUserProfileBirthday] = @"08/09/1991";
                  NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                  [formatter setDateStyle:NSDateFormatterShortStyle];
-                 NSDate *date = [formatter dateFromString:kUserProfileBirthday];
+                 NSDate *date = [formatter dateFromString:@"08/09/1991"];
                  NSDate *today = [NSDate date];
                  NSTimeInterval seconds = [today timeIntervalSinceDate:date];
-                 int age = seconds / 3153600;
+                 int age = seconds / 31536000;
                  userProfile[kUserProfileAgeKey] = @(age);
                  
                  if ([pictureURL absoluteString]) {
