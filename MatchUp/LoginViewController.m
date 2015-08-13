@@ -99,7 +99,7 @@
              {
                 
                 NSDictionary *userDictionary = (NSDictionary*)result;
-                NSMutableDictionary *userProfile = [[NSMutableDictionary alloc] initWithCapacity:8];
+                NSMutableDictionary *userProfile = [[NSMutableDictionary alloc] initWithCapacity:10];
                  
                  //create URL
                  NSString *facebookID = userDictionary[@"id"];
@@ -119,13 +119,25 @@
                  if (userDictionary[@"age_range"]) {
                      userProfile[kUserProfileAgeRangeKey] = userDictionary[@"age_range"];
                  }
-                 //temporary location until facebook approval
+
+#pragma mark - NOTE: Awaiting facebook approval, temporary added custom dates,location,relationship statuses.
                  userProfile[@"location"] = @"San Francisco";
+                 userProfile[kUserProfileRelationshipStatusKey] = @"Single";
+                 
+                 // Convert age to NSNumber
+                 userProfile[kUserProfileBirthday] = @"08/09/1991";
+                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                 [formatter setDateStyle:NSDateFormatterShortStyle];
+                 NSDate *date = [formatter dateFromString:kUserProfileBirthday];
+                 NSDate *today = [NSDate date];
+                 NSTimeInterval seconds = [today timeIntervalSinceDate:date];
+                 int age = seconds / 3153600;
+                 userProfile[kUserProfileAgeKey] = @(age);
                  
                  if ([pictureURL absoluteString]) {
                      userProfile[kUserProfilePictureURL] = [pictureURL absoluteString];
                  }
-                 //NSLog(@"%@", userProfile);
+                 NSLog(@"%@", userProfile);
                  [[PFUser currentUser] setObject:userProfile forKey:kUserProfileKey];
                  [[PFUser currentUser] saveInBackground];
                  [self requestImage];

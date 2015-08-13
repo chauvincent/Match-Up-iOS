@@ -18,7 +18,12 @@ extern NSString *const kUserProfileLocationKey;
 extern NSString *const kUserProfileGenderKey;
 extern NSString *const kUserProfileAgeRangeKey;
 extern NSString *const kUserProfilePictureURL;
+// Added for after facebook approval
+extern NSString *const kUserProfileRelationshipStatusKey;
+extern NSString *const kUserProfileAgeKey;
+extern NSString *const kUserProfileBirthday;
 #pragma mark - Photo Class
+
 extern NSString *const kPhotoClassKey;
 extern NSString *const kPhotoUserKey;
 extern NSString *const kPhotoPictureKey;

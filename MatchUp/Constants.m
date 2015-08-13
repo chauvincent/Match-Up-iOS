@@ -18,6 +18,13 @@ NSString *const kUserProfileLocationKey     = @"location";
 NSString *const kUserProfileGenderKey       = @"gender";
 NSString *const kUserProfileAgeRangeKey     = @"ageRange";
 NSString *const kUserProfilePictureURL      = @"pictureURL";
+
+// Waiting facebook approval
+NSString *const kUserProfileRelationshipStatusKey = @"relationshipStatus";
+NSString *const kUserProfileAgeKey = @"age";
+NSString *const kUserProfileBirthday = @"birthday";
+
+
 #pragma mark - Photo Class
 NSString *const kPhotoClassKey              = @"Photo";
 NSString *const kPhotoUserKey               = @"user";
