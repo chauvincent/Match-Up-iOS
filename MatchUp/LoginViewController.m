@@ -137,7 +137,7 @@
                  if ([pictureURL absoluteString]) {
                      userProfile[kUserProfilePictureURL] = [pictureURL absoluteString];
                  }
-                 NSLog(@"%@", userProfile);
+               //  NSLog(@"%@", userProfile);
                  [[PFUser currentUser] setObject:userProfile forKey:kUserProfileKey];
                  [[PFUser currentUser] saveInBackground];
                  [self requestImage];
