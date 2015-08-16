@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0268E285B0BFE2D5B99C2CD0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC8AFA8E1FF9C664554D39D /* libPods.a */; };
 		7502BFF81B760933007D18EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502BFF71B760933007D18EF /* main.m */; };
 		7502BFFB1B760933007D18EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502BFFA1B760933007D18EF /* AppDelegate.m */; };
 		7502C0041B760933007D18EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7502C0021B760933007D18EF /* Main.storyboard */; };
@@ -14,6 +15,9 @@
 		7502C0091B760933007D18EF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7502C0071B760933007D18EF /* LaunchScreen.xib */; };
 		7502C0151B760933007D18EF /* MatchUpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502C0141B760933007D18EF /* MatchUpTests.m */; };
 		7502C0201B7609B4007D18EF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502C01F1B7609B4007D18EF /* LoginViewController.m */; };
+		7570B1311B80172100790E39 /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7570B1301B80172100790E39 /* MatchViewController.m */; };
+		7570B1351B80468F00790E39 /* MatchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7570B1341B80468F00790E39 /* MatchesViewController.m */; };
+		7570B1391B80533300790E39 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7570B1381B80533300790E39 /* ChatViewController.m */; };
 		759725FA1B7758BF00B6ACD6 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 759725F91B7758BF00B6ACD6 /* Constants.m */; };
 		759726001B7B496900B6ACD6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759725FF1B7B496900B6ACD6 /* HomeViewController.m */; };
 		759726041B7B4CE700B6ACD6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759726031B7B4CE700B6ACD6 /* SettingsViewController.m */; };
@@ -21,7 +25,6 @@
 		7597260C1B7B63A900B6ACD6 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7597260B1B7B63A900B6ACD6 /* ProfileViewController.m */; };
 		759726101B7D7D4A00B6ACD6 /* TestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7597260F1B7D7D4A00B6ACD6 /* TestUser.m */; };
 		759726121B7DB3E200B6ACD6 /* ProfileImage1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 759726111B7DB3E200B6ACD6 /* ProfileImage1.jpeg */; };
-		C31879E209422FBBE226C3EB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B3747DBE0BA8DA4A26270C /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		3B8E0BACE0CCE57ED328558B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		4BC8AFA8E1FF9C664554D39D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7502BFF21B760933007D18EF /* MatchUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7502BFF61B760933007D18EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7502BFF71B760933007D18EF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -49,6 +53,12 @@
 		7502C0141B760933007D18EF /* MatchUpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchUpTests.m; sourceTree = "<group>"; };
 		7502C01E1B7609B4007D18EF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		7502C01F1B7609B4007D18EF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		7570B12F1B80172100790E39 /* MatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
+		7570B1301B80172100790E39 /* MatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
+		7570B1331B80468F00790E39 /* MatchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchesViewController.h; sourceTree = "<group>"; };
+		7570B1341B80468F00790E39 /* MatchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchesViewController.m; sourceTree = "<group>"; };
+		7570B1371B80533300790E39 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		7570B1381B80533300790E39 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		759725E11B760CD400B6ACD6 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = ../PrefixHeader.pch; sourceTree = "<group>"; };
 		759725F81B7758BF00B6ACD6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		759725F91B7758BF00B6ACD6 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
@@ -63,7 +73,6 @@
 		7597260E1B7D7D4A00B6ACD6 /* TestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUser.h; sourceTree = "<group>"; };
 		7597260F1B7D7D4A00B6ACD6 /* TestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUser.m; sourceTree = "<group>"; };
 		759726111B7DB3E200B6ACD6 /* ProfileImage1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ProfileImage1.jpeg; path = ../../ProfileImage1.jpeg; sourceTree = "<group>"; };
-		A4B3747DBE0BA8DA4A26270C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE59B481E20B4B20E5DBA8D5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C31879E209422FBBE226C3EB /* libPods.a in Frameworks */,
+				0268E285B0BFE2D5B99C2CD0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +107,7 @@
 		5942CE6FD32F617A51556A67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A4B3747DBE0BA8DA4A26270C /* libPods.a */,
+				4BC8AFA8E1FF9C664554D39D /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -130,10 +139,13 @@
 				7502BFFA1B760933007D18EF /* AppDelegate.m */,
 				7502C0021B760933007D18EF /* Main.storyboard */,
 				7597260D1B7D7D0500B6ACD6 /* CreateParseUser */,
+				7570B1361B8046DC00790E39 /* Chat */,
 				759726091B7B639C00B6ACD6 /* Profile */,
 				759726051B7B5FD700B6ACD6 /* Edit Profile */,
 				759726011B7B4CD800B6ACD6 /* Settings */,
 				759725FC1B7B48FD00B6ACD6 /* Home */,
+				7570B12E1B80170D00790E39 /* Match */,
+				7570B1321B80467700790E39 /* Matches */,
 				759725F81B7758BF00B6ACD6 /* Constants.h */,
 				759725F91B7758BF00B6ACD6 /* Constants.m */,
 				7502C0051B760933007D18EF /* Images.xcassets */,
@@ -170,6 +182,34 @@
 				7502C0131B760933007D18EF /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7570B12E1B80170D00790E39 /* Match */ = {
+			isa = PBXGroup;
+			children = (
+				7570B12F1B80172100790E39 /* MatchViewController.h */,
+				7570B1301B80172100790E39 /* MatchViewController.m */,
+			);
+			name = Match;
+			sourceTree = "<group>";
+		};
+		7570B1321B80467700790E39 /* Matches */ = {
+			isa = PBXGroup;
+			children = (
+				7570B1331B80468F00790E39 /* MatchesViewController.h */,
+				7570B1341B80468F00790E39 /* MatchesViewController.m */,
+			);
+			name = Matches;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		7570B1361B8046DC00790E39 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				7570B1371B80533300790E39 /* ChatViewController.h */,
+				7570B1381B80533300790E39 /* ChatViewController.m */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		759725FB1B7B48E300B6ACD6 /* Login */ = {
@@ -363,6 +403,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7502BFFB1B760933007D18EF /* AppDelegate.m in Sources */,
+				7570B1351B80468F00790E39 /* MatchesViewController.m in Sources */,
+				7570B1391B80533300790E39 /* ChatViewController.m in Sources */,
 				7502BFF81B760933007D18EF /* main.m in Sources */,
 				7597260C1B7B63A900B6ACD6 /* ProfileViewController.m in Sources */,
 				759726081B7B5FF000B6ACD6 /* EditProfileViewController.m in Sources */,
@@ -370,6 +412,7 @@
 				7502C0201B7609B4007D18EF /* LoginViewController.m in Sources */,
 				759726041B7B4CE700B6ACD6 /* SettingsViewController.m in Sources */,
 				759726001B7B496900B6ACD6 /* HomeViewController.m in Sources */,
+				7570B1311B80172100790E39 /* MatchViewController.m in Sources */,
 				759725FA1B7758BF00B6ACD6 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +544,7 @@
 				INFOPLIST_FILE = MatchUp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"TEST_HOST[sdk=*]" = "";
 			};
 			name = Debug;
 		};
@@ -513,6 +557,7 @@
 				INFOPLIST_FILE = MatchUp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"TEST_HOST[sdk=*]" = "";
 			};
 			name = Release;
 		};
