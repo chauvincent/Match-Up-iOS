@@ -5,6 +5,8 @@ A messages UI for iPhone and iPad.
 
 `JSMessagesViewController` is a `UIViewController` subclass that is very similar to the iOS Messages app. 
 
+**Note: this is only a messaging UI, not a messaging app.**
+
 ![Messages Screenshot 1][img1] &nbsp;&nbsp;&nbsp; ![Messages Screenshot 2][img2]
 
 *See more [screenshots](https://github.com/jessesquires/MessagesTableViewController/tree/master/Screenshots) in the `Screenshots/` directory.*
@@ -52,18 +54,8 @@ A messages UI for iPhone and iPad.
 
 ## Getting Started
 
-### Setup your model
-
-Your model objects should conform to the `JSMessageData` protocol. However, you may use the provided `JSMessage` class for your model objects if you wish.
-
-### Setup your view controller
-
 1. Subclass `JSMessagesViewController`
-2. Conform to the protocols `<JSMessagesViewDelegate, JSMessagesViewDataSource>`
-3. Implement the `JSMessagesViewDelegate` protocol
-4. Implement the `JSMessagesViewDataSource` protocol
-5. Implement `tableView: numberOfRowsInSection:` from the [`UITableViewDataSource` protocol](https://developer.apple.com/library/ios/documentation/uikit/reference/UITableViewDataSource_Protocol/Reference/Reference.html).
-6. Setup your `viewDidLoad` like the following:
+2. Setup your `viewDidLoad` like the following:
 
 ````objective-c
 - (void)viewDidLoad
@@ -77,37 +69,16 @@ Your model objects should conform to the `JSMessageData` protocol. However, you 
     self.title = @"Your view controller title";
     
     self.messageInputView.textView.placeHolder = @"Your placeholder text";
-
-    self.sender = @"Username of sender";
 }
 ````
 
-### Present your view controller
-
-1. Present your subclassed view controller programatically or via StoryBoards. Your subclass should be the `rootViewController` of a `UINavigationController`, or pushed on an existing navigation stack.
-
-2. You may want to show the most recent message when presenting your view: (*this is no longer default behavior*)
-
-````objective-c
-// Scroll to the most recent message before view appears
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self scrollToBottomAnimated:NO];
-}
-````
-
-## Questions?
-
-1. Be a badass [programming-motherfucker](http://programming-motherfucker.com) and [read](http://thecodinglove.com/post/64679177345/when-i-use-a-lib-without-reading-documentation) the fucking documentation. Yes, there's fucking documentation! And it is fucking kept up-to-date. How fucking sweet is that? [Pretty fucking sweet](http://thecodinglove.com/post/45748349769/when-the-library-has-a-very-good-documentation).
-2. See the included demo: **`JSMessagesDemo.xcworkspace`**. Don't forget to run `pod install` before opening!
-3. Still need help? That's ok! Just [open a new issue](https://github.com/jessesquires/MessagesTableViewController/issues/new) with your question, and *add the question label*. 
-4. **Please do not email me your question if you need help**. *But I really want to email you. Why can't I?*
-    * Opening an issue is better for you and the community, because it provides better transparency.
-    * I'm often busy and may not reply in a timely manor.
-    * People using this library and watching this repo may be able to answer your question sooner.
-    * Someone else likely has a similar question and also needs an answer.
-    * Users of this library can search the issues for previously asked questions.
+3. Implement the `JSMessagesViewDelegate` protocol
+4. Implement the `JSMessagesViewDataSource` protocol
+5. Implement `- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section` from the [`UITableViewDataSource` protocol](https://developer.apple.com/library/ios/documentation/uikit/reference/UITableViewDataSource_Protocol/Reference/Reference.html).
+6. Present your subclassed ViewController programatically or via StoryBoards. Your subclass should be the `rootViewController` of a `UINavigationController`.
+7. Be a badass [programming-motherfucker](http://programming-motherfucker.com) and read the fucking documentation. (Yes, there's documentation! [Seriously](http://dailyyeah.com/wp-content/uploads/2008/07/crazy_fat_kid.gif)!)
+8. See the included demo: **`JSMessagesDemo.xcworkspace`**
+    * Don't forget to run `pod install` before opening the demo!
 
 ## Documentation
 
@@ -121,7 +92,6 @@ Support the developement of this **free**, open-source control! via [Square Cash
 <h4><a href="mailto:jesse.squires.developer@gmail.com?cc=cash@square.com&subject=$5&body=Thanks for developing JSMessagesViewController!">Send $5</a> <em>This control is great!</em></h4>
 <h4><a href="mailto:jesse.squires.developer@gmail.com?cc=cash@square.com&subject=$10&body=Thanks for developing JSMessagesViewController!">Send $10</a> <em>This totally saved me time!</em></h4>
 <h4><a href="mailto:jesse.squires.developer@gmail.com?cc=cash@square.com&subject=$25&body=Thanks for developing JSMessagesViewController!">Send $25</a> <em>I want new features!</em></h4>
-<h4><a href="mailto:jesse.squires.developer@gmail.com?cc=cash@square.com&subject=$50&body=Thanks for developing JSMessagesViewController!">Send $50</a> <em>I love this project!</em></h4>
 
 ## Customization
 
@@ -130,12 +100,10 @@ Support the developement of this **free**, open-source control! via [Square Cash
 ````objective-c
 - (void)configureCell:(JSBubbleMessageCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell messageType] == JSBubbleMessageTypeOutgoing) {
-
-        // Customize any UITextView properties
+    if([cell messageType] == JSBubbleMessageTypeOutgoing) {
         cell.bubbleView.textView.textColor = [UIColor whiteColor];
     
-        if ([cell.bubbleView.textView respondsToSelector:@selector(linkTextAttributes)]) {
+        if([cell.bubbleView.textView respondsToSelector:@selector(linkTextAttributes)]) {
             NSMutableDictionary *attrs = [cell.bubbleView.textView.linkTextAttributes mutableCopy];
             [attrs setValue:[UIColor blueColor] forKey:UITextAttributeTextColor];
             
@@ -143,18 +111,14 @@ Support the developement of this **free**, open-source control! via [Square Cash
         }
     }
     
-    // Customize any UILabel properties for timestamps or subtitles
-    if (cell.timestampLabel) {
+    if(cell.timestampLabel) {
         cell.timestampLabel.textColor = [UIColor lightGrayColor];
         cell.timestampLabel.shadowOffset = CGSizeZero;
     }
     
-    if (cell.subtitleLabel) {
+    if(cell.subtitleLabel) {
         cell.subtitleLabel.textColor = [UIColor lightGrayColor];
     }
-
-    // Enable data detectors
-    cell.bubbleView.textView.dataDetectorTypes = UIDataDetectorTypeAll;
 }
 ````
 
@@ -167,6 +131,8 @@ Support the developement of this **free**, open-source control! via [Square Cash
 * Customize your message bubbles with `JSBubbleImageViewFactory`
 
 * Customize your avatars with `JSAvatarImageFactory`
+
+*More tips coming soon!* Have your own? Submit a PR!
 
 ## How To Contribute
 
@@ -188,7 +154,7 @@ Square message bubbles designed by [@michaelschultz](http://www.twitter.com/mich
 
 I initially developed this control to use in [Hemoglobe](http://www.hemoglobe.com) for private messages between users.
 
-As it turns out, messaging is a popular thing that iOS devs and users want. Thus, I am supporting this project in my free time and have added features way beyond what [Hemoglobe](http://www.hemoglobe.com) ever needed.
+As it turns out, messaging is a popular thing that iOS devs want to do — I know, this is *shocking*. Thus, I am supporting this project in my free time and have added features way beyond what [Hemoglobe](http://www.hemoglobe.com) ever needed.
 
 Check out my work at [Hexed Bits](http://www.hexedbits.com).
 
@@ -201,8 +167,6 @@ Check out my work at [Hexed Bits](http://www.hexedbits.com).
 [Oxwall Messenger](https://github.com/tochman/OxwallMessenger)
 
 [FourChat](https://itunes.apple.com/us/app/fourchat/id650833730?mt=8)
-
-[Quick Text Message](https://itunes.apple.com/us/app/quick-text-message-fast-sms/id583729997?mt=8)
 
 [Libraries for developers](https://itunes.apple.com/us/app/libraries-for-developers/id653427112?mt=8)
 
@@ -230,7 +194,7 @@ Copyright &copy; 2013 Jesse Squires
 
 >THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[docsLink]:http://cocoadocs.org/docsets/JSMessagesViewController/4.0.0
+[docsLink]:http://cocoadocs.org/docsets/JSMessagesViewController/3.4.4
 
 [mitLink]:http://opensource.org/licenses/MIT
 

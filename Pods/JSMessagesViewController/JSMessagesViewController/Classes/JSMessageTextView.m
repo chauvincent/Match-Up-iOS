@@ -20,9 +20,7 @@
 
 - (void)setup;
 
-- (void)addTextViewNotificationObservers;
-- (void)removeTextViewNotificationObservers;
-- (void)didReceiveTextViewNotification:(NSNotification *)notification;
+- (void)didReceiveTextDidChangeNotification:(NSNotification *)notification;
 
 @end
 
@@ -34,6 +32,11 @@
 
 - (void)setup
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveTextDidChangeNotification:)
+                                                 name:UITextViewTextDidChangeNotification
+                                               object:self];
+    
     _placeHolderTextColor = [UIColor lightGrayColor];
     
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -49,23 +52,21 @@
     self.keyboardType = UIKeyboardTypeDefault;
     self.returnKeyType = UIReturnKeyDefault;
     self.textAlignment = NSTextAlignmentLeft;
-    
-    [self addTextViewNotificationObservers];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if(self) {
         [self setup];
     }
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self) {
+    if(self) {
         [self setup];
     }
     return self;
@@ -73,21 +74,23 @@
 
 - (void)dealloc
 {
-    [self removeTextViewNotificationObservers];
     _placeHolder = nil;
     _placeHolderTextColor = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UITextViewTextDidChangeNotification
+                                                  object:self];
 }
 
 #pragma mark - Setters
 
 - (void)setPlaceHolder:(NSString *)placeHolder
 {
-    if ([placeHolder isEqualToString:_placeHolder]) {
+    if([placeHolder isEqualToString:_placeHolder]) {
         return;
     }
     
     NSUInteger maxChars = [JSMessageTextView maxCharactersPerLine];
-    if ([placeHolder length] > maxChars) {
+    if([placeHolder length] > maxChars) {
         placeHolder = [placeHolder substringToIndex:maxChars - 8];
         placeHolder = [[placeHolder js_stringByTrimingWhitespace] stringByAppendingFormat:@"..."];
     }
@@ -98,7 +101,7 @@
 
 - (void)setPlaceHolderTextColor:(UIColor *)placeHolderTextColor
 {
-    if ([placeHolderTextColor isEqual:_placeHolderTextColor]) {
+    if([placeHolderTextColor isEqual:_placeHolderTextColor]) {
         return;
     }
     
@@ -131,9 +134,21 @@
     [self setNeedsDisplay];
 }
 
+- (void)insertText:(NSString *)text
+{
+    [super insertText:text];
+    [self setNeedsDisplay];
+}
+
 - (void)setAttributedText:(NSAttributedString *)attributedText
 {
     [super setAttributedText:attributedText];
+    [self setNeedsDisplay];
+}
+
+- (void)setContentInset:(UIEdgeInsets)contentInset
+{
+    [super setContentInset:contentInset];
     [self setNeedsDisplay];
 }
 
@@ -155,7 +170,7 @@
 {
     [super drawRect:rect];
     
-    if ([self.text length] == 0 && self.placeHolder) {
+    if([self.text length] == 0 && self.placeHolder) {
         CGRect placeHolderRect = CGRectMake(10.0f,
                                             7.0f,
                                             rect.size.width,
@@ -184,40 +199,7 @@
 
 #pragma mark - Notifications
 
-- (void)addTextViewNotificationObservers
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveTextViewNotification:)
-                                                 name:UITextViewTextDidChangeNotification
-                                               object:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveTextViewNotification:)
-                                                 name:UITextViewTextDidBeginEditingNotification
-                                               object:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveTextViewNotification:)
-                                                 name:UITextViewTextDidEndEditingNotification
-                                               object:self];
-}
-
-- (void)removeTextViewNotificationObservers
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UITextViewTextDidChangeNotification
-                                                  object:self];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UITextViewTextDidBeginEditingNotification
-                                                  object:self];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UITextViewTextDidEndEditingNotification
-                                                  object:self];
-}
-
-- (void)didReceiveTextViewNotification:(NSNotification *)notification
+- (void)didReceiveTextDidChangeNotification:(NSNotification *)notification
 {
     [self setNeedsDisplay];
 }

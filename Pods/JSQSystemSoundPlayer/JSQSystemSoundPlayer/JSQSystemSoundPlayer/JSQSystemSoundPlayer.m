@@ -1,29 +1,15 @@
 //
 //  Created by Jesse Squires
-//  http://www.jessesquires.com
+//  http://www.hexedbits.com
 //
 //
-//  Documentation
-//  http://www.jessesquires.com/JSQSystemSoundPlayer
-//
-//
-//  GitHub
-//  https://github.com/jessesquires/JSQSystemSoundPlayer
-//
-//
-//  License
-//  Copyright (c) 2015 Jesse Squires
-//  Released under an MIT license: http://opensource.org/licenses/MIT
+//  The MIT License
+//  Copyright (c) 2013 Jesse Squires
+//  http://opensource.org/licenses/MIT
 //
 
 #import "JSQSystemSoundPlayer.h"
-
 #import <AudioToolbox/AudioToolbox.h>
-
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#endif
-
 
 static NSString * const kJSQSystemSoundPlayerUserDefaultsKey = @"kJSQSystemSoundPlayerUserDefaultsKey";
 
@@ -70,12 +56,12 @@ NSString * const kJSQSystemSoundTypeWAV = @"wav";
 
 
 
-static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
+void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 {
     JSQSystemSoundPlayer *player = [JSQSystemSoundPlayer sharedPlayer];
-
+    
     JSQSystemSoundPlayerCompletionBlock block = [player completionBlockForSoundID:soundID];
-    if (block) {
+    if(block) {
         block();
         [player removeCompletionBlockForSoundID:soundID];
     }
@@ -90,49 +76,38 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 + (JSQSystemSoundPlayer *)sharedPlayer
 {
     static JSQSystemSoundPlayer *sharedPlayer;
-
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedPlayer = [[JSQSystemSoundPlayer alloc] init];
     });
-
+    
     return sharedPlayer;
 }
 
-- (instancetype)init
+- (id)init
 {
     self = [super init];
-    if (self) {
-        _bundle = [NSBundle mainBundle];
+    if(self) {
         _on = [self readSoundPlayerOnFromUserDefaults];
         _sounds = [[NSMutableDictionary alloc] init];
         _completionBlocks = [[NSMutableDictionary alloc] init];
-
-        #if TARGET_OS_IPHONE
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMemoryWarningNotification:)
                                                      name:UIApplicationDidReceiveMemoryWarningNotification
                                                    object:nil];
-        #endif
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self unloadSoundIDs];
     _sounds = nil;
     _completionBlocks = nil;
-    _bundle = nil;
-}
-
-#pragma mark - Setters
-
-- (void)setBundle:(NSBundle *)bundle
-{
-    NSParameterAssert(bundle != nil);
-    _bundle = bundle;
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidReceiveMemoryWarningNotification
+                                                  object:nil];
 }
 
 #pragma mark - Playing sounds
@@ -142,35 +117,36 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
                   isAlert:(BOOL)isAlert
           completionBlock:(JSQSystemSoundPlayerCompletionBlock)completionBlock
 {
-    NSParameterAssert(filename != nil);
-    NSParameterAssert(extension != nil);
-
     if (!self.on) {
         return;
     }
-
-    if (![self.sounds objectForKey:filename]) {
+    
+    if(!filename || !extension) {
+        return;
+    }
+    
+    if(![self.sounds objectForKey:filename]) {
         [self addSoundIDForAudioFileWithName:filename extension:extension];
     }
-
+    
     SystemSoundID soundID = [self soundIDForFilename:filename];
-    if (soundID) {
-        if (completionBlock) {
+    if(soundID) {
+        if(completionBlock) {
             OSStatus error = AudioServicesAddSystemSoundCompletion(soundID,
                                                                    NULL,
                                                                    NULL,
                                                                    systemServicesSoundCompletion,
                                                                    NULL);
-
-            if (error) {
+            
+            if(error) {
                 [self logError:error withMessage:@"Warning! Completion block could not be added to SystemSoundID."];
             }
             else {
                 [self addCompletionBlock:completionBlock toSoundID:soundID];
             }
         }
-
-        if (isAlert) {
+        
+        if(isAlert) {
             AudioServicesPlayAlertSound(soundID);
         }
         else {
@@ -182,12 +158,12 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 - (BOOL)readSoundPlayerOnFromUserDefaults
 {
     NSNumber *setting = [[NSUserDefaults standardUserDefaults] objectForKey:kJSQSystemSoundPlayerUserDefaultsKey];
-
+    
     if (!setting) {
         [self toggleSoundPlayerOn:YES];
         return YES;
     }
-
+    
     return [setting boolValue];
 }
 
@@ -196,44 +172,56 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 - (void)toggleSoundPlayerOn:(BOOL)on
 {
     _on = on;
-
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:[NSNumber numberWithBool:on] forKey:kJSQSystemSoundPlayerUserDefaultsKey];
     [userDefaults synchronize];
-
+    
     if (!on) {
         [self stopAllSounds];
     }
 }
 
-- (void)playSoundWithFilename:(NSString *)filename
-                fileExtension:(NSString *)fileExtension
-                   completion:(JSQSystemSoundPlayerCompletionBlock)completionBlock
+- (void)playSoundWithName:(NSString *)filename extension:(NSString *)extension
 {
     [self playSoundWithName:filename
-                  extension:fileExtension
+                  extension:extension
+                 completion:nil];
+}
+
+- (void)playSoundWithName:(NSString *)filename
+                extension:(NSString *)extension
+               completion:(JSQSystemSoundPlayerCompletionBlock)completionBlock
+{
+    [self playSoundWithName:filename
+                  extension:extension
                     isAlert:NO
             completionBlock:completionBlock];
 }
 
-- (void)playAlertSoundWithFilename:(NSString *)filename
-                     fileExtension:(NSString *)fileExtension
-                        completion:(JSQSystemSoundPlayerCompletionBlock)completionBlock
+- (void)playAlertSoundWithName:(NSString *)filename
+                     extension:(NSString *)extension
+                    completion:(JSQSystemSoundPlayerCompletionBlock)completionBlock
 {
     [self playSoundWithName:filename
-                  extension:fileExtension
+                  extension:extension
                     isAlert:YES
             completionBlock:completionBlock];
 }
 
-#if TARGET_OS_IPHONE
+- (void)playAlertSoundWithName:(NSString *)filename extension:(NSString *)extension
+{
+    [self playAlertSoundWithName:filename
+                       extension:extension
+                      completion:nil];
+}
+
 - (void)playVibrateSound
 {
     if (self.on) {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
 }
-#endif
 
 - (void)stopAllSounds
 {
@@ -242,25 +230,13 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 
 - (void)stopSoundWithFilename:(NSString *)filename
 {
-    NSParameterAssert(filename != nil);
-
     SystemSoundID soundID = [self soundIDForFilename:filename];
     NSData *data = [self dataWithSoundID:soundID];
-
+    
     [self unloadSoundIDForFileNamed:filename];
-
+    
     [_sounds removeObjectForKey:filename];
     [_completionBlocks removeObjectForKey:data];
-}
-
-- (void)preloadSoundWithFilename:(NSString *)filename fileExtension:(NSString *)fileExtension
-{
-    NSParameterAssert(filename != nil);
-    NSParameterAssert(fileExtension != nil);
-
-    if (![self.sounds objectForKey:filename]) {
-        [self addSoundIDForAudioFileWithName:filename extension:fileExtension];
-    }
 }
 
 #pragma mark - Sound data
@@ -272,10 +248,10 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 
 - (SystemSoundID)soundIDFromData:(NSData *)data
 {
-    if (data == nil) {
+    if(!data) {
         return 0;
     }
-
+    
     SystemSoundID soundID;
     [data getBytes:&soundID length:sizeof(SystemSoundID)];
     return soundID;
@@ -294,7 +270,7 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 {
     SystemSoundID soundID = [self createSoundIDWithName:filename
                                               extension:extension];
-    if (soundID) {
+    if(soundID) {
         NSData *data = [self dataWithSoundID:soundID];
         [self.sounds setObject:data forKey:filename];
     }
@@ -327,13 +303,14 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 - (SystemSoundID)createSoundIDWithName:(NSString *)filename
                              extension:(NSString *)extension
 {
-    NSURL *fileURL = [self.bundle URLForResource:filename withExtension:extension];
-
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]]) {
+    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:filename
+                                             withExtension:extension];
+    
+    if([[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]]) {
         SystemSoundID soundID;
         OSStatus error = AudioServicesCreateSystemSoundID((__bridge CFURLRef)fileURL, &soundID);
-
-        if (error) {
+        
+        if(error) {
             [self logError:error withMessage:@"Warning! SystemSoundID could not be created."];
             return 0;
         }
@@ -341,17 +318,17 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
             return soundID;
         }
     }
-
-    NSLog(@"[%@] Error: audio file not found at URL: %@", [self class], fileURL);
+    
+    NSLog(@"Error: audio file not found at URL: %@", fileURL);
     return 0;
 }
 
 - (void)unloadSoundIDs
 {
-    for (NSString *eachFilename in [_sounds allKeys]) {
+    for(NSString *eachFilename in [_sounds allKeys]) {
         [self unloadSoundIDForFileNamed:eachFilename];
     }
-
+    
     [_sounds removeAllObjects];
     [_completionBlocks removeAllObjects];
 }
@@ -359,12 +336,12 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 - (void)unloadSoundIDForFileNamed:(NSString *)filename
 {
     SystemSoundID soundID = [self soundIDForFilename:filename];
-
-    if (soundID) {
+    
+    if(soundID) {
         AudioServicesRemoveSystemSoundCompletion(soundID);
-
+        
         OSStatus error = AudioServicesDisposeSystemSoundID(soundID);
-        if (error) {
+        if(error) {
             [self logError:error withMessage:@"Warning! SystemSoundID could not be disposed."];
         }
     }
@@ -373,7 +350,7 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
 - (void)logError:(OSStatus)error withMessage:(NSString *)message
 {
     NSString *errorMessage = nil;
-
+    
     switch (error) {
         case kAudioServicesUnsupportedPropertyError:
             errorMessage = @"The property is not supported.";
@@ -391,14 +368,15 @@ static void systemServicesSoundCompletion(SystemSoundID  soundID, void *data)
             errorMessage = @"System sound client message timed out.";
             break;
     }
-
-    NSLog(@"[%@] %@ Error: (code %d) %@", [self class], message, (int)error, errorMessage);
+    
+    NSLog(@"%@ Error: (code %d) %@", message, (int)error, errorMessage);
 }
 
 #pragma mark - Notifications
 
 - (void)didReceiveMemoryWarningNotification:(NSNotification *)notification
 {
+    NSLog(@"%@ received memory warning!", [self class]);
     [self unloadSoundIDs];
 }
 

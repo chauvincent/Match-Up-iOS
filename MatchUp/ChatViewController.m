@@ -81,7 +81,7 @@
         [chat saveInBackgroundWithBlock:^(BOOL success, NSError *error)
          {
              [self.chats addObject:chat];
-             [JSMessageSoundEffect playMessageSentSound];
+        //     [JSMessageSoundEffect playMessageSentSound];
              [self.tableView reloadData];
              [self finishSend];
              [self scrollToBottomAnimated:YES];
