@@ -34,6 +34,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self checkForNewChats];
     // Do any additional setup after loading the view.
     self.delegate = self;
     self.dataSource = self;
@@ -57,7 +59,14 @@
     self.title = self.withUser[@"profile"][@"firstName"];
     self.intialLoadComplete = NO;
     
-
+  
+    self.chatsTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkForNewChats) userInfo:nil repeats:YES];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+    [self.chatsTimer invalidate];
+    self.chatsTimer = nil;
 }
 #pragma mark -TableView Datasource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -154,7 +163,32 @@
 {
     return nil;
 }
-
+#pragma mark - Helper Methods
+-(void)checkForNewChats
+{
+    int oldChatCount = (int)[self.chats count];
+    PFQuery *queryForChats = [PFQuery queryWithClassName:@"Chat"];
+    [queryForChats whereKey:@"chatroom" equalTo:self.chatRoom];
+    [queryForChats orderByAscending:@"createdAt"];
+    [queryForChats findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        if (!error)
+        {
+            if (self.intialLoadComplete == NO || oldChatCount != [objects count])
+            {
+                self.chats = [objects mutableCopy];
+                [self.tableView reloadData];
+                self.intialLoadComplete = YES;
+                if (self.intialLoadComplete == YES)
+                {
+                    [JSMessageSoundEffect playMessageReceivedSound];
+                }
+                self.intialLoadComplete = YES;
+                [self scrollToBottomAnimated:YES];
+            }
+        }
+    }];
+}
     /*
 #pragma mark - Navigation
 

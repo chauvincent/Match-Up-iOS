@@ -9,8 +9,8 @@
 #import "MatchViewController.h"
 
 @interface MatchViewController ()
-@property (strong, nonatomic) IBOutlet UIButton *viewChatsButtonPressed;
-@property (strong, nonatomic) IBOutlet UIButton *keepSearchingButtonPressed;
+
+
 @property (strong, nonatomic) IBOutlet UIImageView *matchUserImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *currentUserImageView;
 
@@ -52,11 +52,11 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 #pragma mark - IBActions
 - (IBAction)viewChatsButtonPressed:(id)sender
 {
     [self.delegate presentMatchesViewController];
-    
 }
 
 - (IBAction)keepSearchingButtonPressed:(id)sender

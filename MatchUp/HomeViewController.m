@@ -38,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [TestUser saveTestUserToParse];
+    //[TestUser saveTestUserToParse];
     
     // initial setup
     self.likeButton.enabled = NO;
@@ -94,6 +94,7 @@
 #pragma mark - IBActions
 - (IBAction)chatButtonPressed:(UIBarButtonItem *)sender
 {
+    [self performSegueWithIdentifier:@"homeToMatchesSegue" sender:nil];
 }
 
 - (IBAction)settingsButtonPressed:(UIBarButtonItem *)sender
@@ -136,7 +137,7 @@
     PFQuery *queryForLike = [PFQuery queryWithClassName:kActivityClassKey];
     [queryForLike whereKey:kActivityTypeKey equalTo:kActivityTypeLikeKey];
     [queryForLike whereKey:kActivityPhotoKey equalTo:self.photo];
-    [queryForLike whereKey:kActivityToUserKey equalTo:[PFUser currentUser]];
+    [queryForLike whereKey:kActivityFromUserKey equalTo:[PFUser currentUser]];
     
     PFQuery *queryForDisLike = [PFQuery queryWithClassName:kActivityClassKey];
     [queryForLike whereKey:kActivityTypeKey equalTo:kActivityTypeDislikeKey];
@@ -204,10 +205,10 @@
     PFObject *likeActivity = [PFObject objectWithClassName:kActivityClassKey]; // new class
     [likeActivity setObject:kActivityTypeLikeKey forKey:kActivityTypeKey];
     [likeActivity setObject:[PFUser currentUser] forKey:kActivityFromUserKey];
-    [likeActivity setObject:[self.photo objectForKey:kPhotoUserKey] forKey:kActivityToUserKey]; // for owner of photo
-    [likeActivity setObject:self.photo forKey:kActivityPhotoKey];
+    [likeActivity setObject:[self.photo objectForKey:kPhotoUserKey] forKey:kActivityToUserKey];     [likeActivity setObject:self.photo forKey:kActivityPhotoKey];
     [likeActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
         {
+            [self checkForChatRoom];
             self.isLikedByCurrentUser = YES;
             self.dislikedByCurrentUser = NO;
             [self.activities addObject:likeActivity];
@@ -233,9 +234,12 @@
 -(void)checkLike
 {
     // if already liked
+    self.isLikedByCurrentUser ? NSLog(@"YES") : NSLog(@"NO");
+    self.dislikedByCurrentUser ? NSLog(@"YES") : NSLog(@"NO");
     if (self.isLikedByCurrentUser)
     {
         [self setUpNextPhoto];
+    
         return;
     }
     else if (self.dislikedByCurrentUser) // delete and remove from activity
@@ -247,8 +251,9 @@
         [self saveLike];
     }
     else
+    {
         [self saveLike];
-    
+    }
 }
 -(void)checkDislike
 {
@@ -306,6 +311,19 @@
             {
                 [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
             }];
+        }
+    }];
+}
+
+- (void)checkForChatRoom
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Activity"];
+    [query whereKey:kActivityFromUserKey equalTo:self.photo[kPhotoUserKey]];
+    [query whereKey:kActivityToUserKey equalTo:[PFUser currentUser]];
+    [query whereKey:@"type" equalTo:@"like"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (objects.count > 0) {
+            [self createChatRoom];
         }
     }];
 }
