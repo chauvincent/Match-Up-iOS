@@ -27,6 +27,9 @@
 @property (strong, nonatomic) PFObject *photo; //keep track of current photo
 @property (strong, nonatomic) NSMutableArray *activities;
 
+@property (strong, nonatomic) IBOutlet UIView *labelContainerView;
+@property (strong, nonatomic) IBOutlet UIView *buttonContainerView;
+
 @property (nonatomic) int currentPhotoIndex;
 @property (nonatomic) BOOL isLikedByCurrentUser;
 @property (nonatomic) BOOL dislikedByCurrentUser;
@@ -41,6 +44,7 @@
     //[TestUser saveTestUserToParse];
     
     // initial setup
+    [self setUpViews];
     
     
     // Do any additional setup after loading the view.
@@ -128,7 +132,21 @@
 }
 
 #pragma mark - Helper Methods
-
+-(void)setUpViews
+{
+    self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
+    [self addShadowForView:self.buttonContainerView];
+    [self addShadowForView:self.labelContainerView];
+    self.photoImageView.layer.masksToBounds=NO;
+}
+-(void)addShadowForView:(UIView *)view
+{
+    view.layer.masksToBounds = NO;
+    view.layer.cornerRadius = 4;
+    view.layer.shadowRadius = 1;
+    view.layer.shadowOffset = CGSizeMake(0, 1);
+    view.layer.shadowOpacity = 0.25;
+}
 -(void)queryForCurrentPhotoIndex
 {
     if ([self.photos count] > 0)
