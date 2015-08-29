@@ -11,7 +11,7 @@
 #import "ProfileViewController.h"
 #import "MatchViewController.h"
 
-@interface HomeViewController () <MatchViewControllerDelegate>
+@interface HomeViewController () <MatchViewControllerDelegate, ProfileViewcontrollerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *chatBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
@@ -99,6 +99,7 @@
     {
         ProfileViewController *profileVC = segue.destinationViewController;
         profileVC.photo = self.photo;
+        profileVC.delegate = self;
         
     }
     else if ([segue.identifier isEqualToString:@"homeToMatchSegue"])
@@ -415,6 +416,17 @@
     }];
 }
 
-
-
+#pragma mark - ProfileViewControler Delegate
+-(void)didPressLike
+{
+    [self.navigationController popViewControllerAnimated:NO];
+    [self checkLike];
+    
+}
+-(void)didPressDislike
+{
+    
+    [self.navigationController popViewControllerAnimated:NO];
+    [self checkDislike];
+}
 @end
