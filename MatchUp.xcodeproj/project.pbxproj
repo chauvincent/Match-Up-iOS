@@ -15,6 +15,7 @@
 		7502C0091B760933007D18EF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7502C0071B760933007D18EF /* LaunchScreen.xib */; };
 		7502C0151B760933007D18EF /* MatchUpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502C0141B760933007D18EF /* MatchUpTests.m */; };
 		7502C0201B7609B4007D18EF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502C01F1B7609B4007D18EF /* LoginViewController.m */; };
+		7563A2C01B9311A0004CB5A4 /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7563A2BF1B9311A0004CB5A4 /* TransitionAnimator.m */; };
 		7570B1311B80172100790E39 /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7570B1301B80172100790E39 /* MatchViewController.m */; };
 		7570B1351B80468F00790E39 /* MatchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7570B1341B80468F00790E39 /* MatchesViewController.m */; };
 		7570B1391B80533300790E39 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7570B1381B80533300790E39 /* ChatViewController.m */; };
@@ -202,6 +203,8 @@
 		7502C0141B760933007D18EF /* MatchUpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchUpTests.m; sourceTree = "<group>"; };
 		7502C01E1B7609B4007D18EF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		7502C01F1B7609B4007D18EF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		7563A2BE1B9311A0004CB5A4 /* TransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionAnimator.h; sourceTree = "<group>"; };
+		7563A2BF1B9311A0004CB5A4 /* TransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionAnimator.m; sourceTree = "<group>"; };
 		7570B12F1B80172100790E39 /* MatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
 		7570B1301B80172100790E39 /* MatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
 		7570B1331B80468F00790E39 /* MatchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchesViewController.h; sourceTree = "<group>"; };
@@ -436,6 +439,7 @@
 				7502BFF91B760933007D18EF /* AppDelegate.h */,
 				7502BFFA1B760933007D18EF /* AppDelegate.m */,
 				7502C0021B760933007D18EF /* Main.storyboard */,
+				7563A2BD1B931174004CB5A4 /* Transition Helper */,
 				7597260D1B7D7D0500B6ACD6 /* CreateParseUser */,
 				7570B1361B8046DC00790E39 /* Chat */,
 				759726091B7B639C00B6ACD6 /* Profile */,
@@ -481,6 +485,15 @@
 				7502C0131B760933007D18EF /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7563A2BD1B931174004CB5A4 /* Transition Helper */ = {
+			isa = PBXGroup;
+			children = (
+				7563A2BE1B9311A0004CB5A4 /* TransitionAnimator.h */,
+				7563A2BF1B9311A0004CB5A4 /* TransitionAnimator.m */,
+			);
+			name = "Transition Helper";
 			sourceTree = "<group>";
 		};
 		7570B12E1B80170D00790E39 /* Match */ = {
@@ -1130,6 +1143,7 @@
 				7502BFFB1B760933007D18EF /* AppDelegate.m in Sources */,
 				7570B1351B80468F00790E39 /* MatchesViewController.m in Sources */,
 				7570B1391B80533300790E39 /* ChatViewController.m in Sources */,
+				7563A2C01B9311A0004CB5A4 /* TransitionAnimator.m in Sources */,
 				7502BFF81B760933007D18EF /* main.m in Sources */,
 				7597260C1B7B63A900B6ACD6 /* ProfileViewController.m in Sources */,
 				759726081B7B5FF000B6ACD6 /* EditProfileViewController.m in Sources */,

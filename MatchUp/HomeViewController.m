@@ -10,8 +10,9 @@
 #import "TestUser.h"
 #import "ProfileViewController.h"
 #import "MatchViewController.h"
+#import "TransitionAnimator.h"
 
-@interface HomeViewController () <MatchViewControllerDelegate, ProfileViewcontrollerDelegate>
+@interface HomeViewController () <MatchViewControllerDelegate, ProfileViewcontrollerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *chatBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
@@ -102,12 +103,12 @@
         profileVC.delegate = self;
         
     }
-    else if ([segue.identifier isEqualToString:@"homeToMatchSegue"])
-    {
-        MatchViewController *nextVC = segue.destinationViewController;
-        nextVC.matchedUserImage = self.photoImageView.image;
-        nextVC.delegate = self;
-    }
+//    else if ([segue.identifier isEqualToString:@"homeToMatchSegue"])
+//    {
+//        MatchViewController *nextVC = segue.destinationViewController;
+//        nextVC.matchedUserImage = self.photoImageView.image;
+//        nextVC.delegate = self;
+//    }
 }
 
 #pragma mark - IBActions
@@ -121,11 +122,24 @@
 }
 - (IBAction)likeButtonPressed:(UIButton *)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    [mixpanel track:@"Like"];
+    
+    [mixpanel flush];
+    
     [self checkLike];
 }
 - (IBAction)dislikeButtonPressed:(UIButton *)sender
 {
     [self checkDislike];
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    [mixpanel track:@"Dislike"];
+    
+    [mixpanel flush];
+    
 }
 - (IBAction)infoButtonPressed:(UIButton *)sender
 {
@@ -285,7 +299,7 @@
     PFObject *likeActivity = [PFObject objectWithClassName:kActivityClassKey]; // new class
     [likeActivity setObject:kActivityTypeLikeKey forKey:kActivityTypeKey];
     [likeActivity setObject:[PFUser currentUser] forKey:kActivityFromUserKey];
-    [likeActivity setObject:[self.photo objectForKey:kPhotoUserKey] forKey:kActivityToUserKey];     [likeActivity setObject:self.photo forKey:kActivityPhotoKey];
+    [likeActivity setObject:[self.photo objectForKey:kPhotoUserKey] forKey:kActivityToUserKey];  [likeActivity setObject:self.photo forKey:kActivityPhotoKey];
     [likeActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
         {
             [self checkForChatRoom];
@@ -314,12 +328,11 @@
 -(void)checkLike
 {
     // if already liked
-    self.isLikedByCurrentUser ? NSLog(@"YES") : NSLog(@"NO");
-    self.dislikedByCurrentUser ? NSLog(@"YES") : NSLog(@"NO");
+
     if (self.isLikedByCurrentUser)
     {
         [self setUpNextPhoto];
-    
+        [self saveLike];
         return;
     }
     else if (self.dislikedByCurrentUser) // delete and remove from activity
@@ -389,7 +402,16 @@
             [chatRoom setObject:self.photo[kPhotoUserKey] forKey:kChatRoomUser2Key];
             [chatRoom saveInBackgroundWithBlock:^(BOOL success, NSError *error)
             {
-                [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
+                //[self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
+                // custom transition
+                UIStoryboard *myStoryboard = self.storyboard;
+                MatchViewController *matchVC = [myStoryboard instantiateViewControllerWithIdentifier:@"matchVC"];
+                matchVC.view.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:.74];
+                matchVC.transitioningDelegate = self;
+                matchVC.matchedUserImage = self.photoImageView.image;
+                matchVC.delegate = self;
+                matchVC.modalPresentationStyle = UIModalPresentationCustom;
+                [self presentViewController:matchVC animated:YES completion:nil];
             }];
         }
     }];
@@ -429,4 +451,18 @@
     [self.navigationController popViewControllerAnimated:NO];
     [self checkDislike];
 }
+
+#pragma mark - UIViewControllerTransitionDelegate
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    TransitionAnimator *animator = [[TransitionAnimator alloc] init];
+    animator.presenting = YES;
+    return animator;
+}
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    TransitionAnimator *animator = [[TransitionAnimator alloc] init];
+    return animator;
+}
+
 @end

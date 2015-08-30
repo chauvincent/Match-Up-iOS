@@ -19,6 +19,9 @@ PODS:
   - JSMessagesViewController (3.4.4):
     - JSQSystemSoundPlayer
   - JSQSystemSoundPlayer (4.1.0)
+  - Mixpanel (2.8.3):
+    - Mixpanel/Mixpanel (= 2.8.3)
+  - Mixpanel/Mixpanel (2.8.3)
   - Parse (1.8.0):
     - Bolts/Tasks (>= 1.2.0)
   - ParseFacebookUtilsV4 (1.8.0.1):
@@ -29,6 +32,7 @@ PODS:
 
 DEPENDENCIES:
   - JSMessagesViewController (~> 3.4.3)
+  - Mixpanel
   - Parse (~> 1.7)
   - ParseFacebookUtilsV4 (~> 1.7)
 
@@ -38,6 +42,7 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 225cc9a388a92916ee3f3bb14422017b6e44b65b
   JSMessagesViewController: c0e1d4b601a50057c70dbb9d8dd6f724acd56bed
   JSQSystemSoundPlayer: 98392a1064d9af1292493f71036b9154f79d203f
+  Mixpanel: fd52e097ae0d27295d0595b2261c60b94d191fda
   Parse: 6ea05adb378fbfd6f8726ab67ef74330d96fc903
   ParseFacebookUtilsV4: d173e7fffa6cf52da1abd773d6c5c8f235194ea6
 

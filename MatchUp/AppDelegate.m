@@ -23,6 +23,8 @@
     [Parse setApplicationId:@"HLEyyntqfIFL5FJghxSHkN8GaEx0U3D7hHS0RExJ"                                   clientKey:@"7iH6UcyqqzIQTdCRAcLUGcqSDXuCeB0LPckbn7j3"];
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
     
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    
     //default settings
     NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"defaultPrefsFile" ofType:@"plist"];
     

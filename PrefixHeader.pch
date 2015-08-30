@@ -23,6 +23,9 @@
     #import <FBSDKLoginKit/FBSDKLoginKit.h>
     #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
     #import "Constants.h"
+    #import <Mixpanel.h>
+#define MIXPANEL_TOKEN @"c27d2795a53107c87cf78facb26fa960"
+
 #endif
 
 

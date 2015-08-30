@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="QJ7-NT-5RD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hnz-uF-zon">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
@@ -351,9 +351,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="UserImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="t8e-Ja-j0z">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UserImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="t8e-Ja-j0z">
                                 <rect key="frame" x="133" y="93" width="340" height="233"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="340" id="Jah-Bg-pqC"/>
+                                    <constraint firstAttribute="height" constant="233" id="P3D-yM-Kzc"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="    About Me" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0B-Yz-lrb">
                                 <rect key="frame" x="0.0" y="352" width="600" height="21"/>
@@ -366,6 +370,8 @@
                                 <rect key="frame" x="16" y="381" width="568" height="119"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="568" id="AbK-Kl-jtr"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="119" id="tcM-n9-Llw"/>
                                     <constraint firstAttribute="height" constant="119" id="zvd-GT-Lci"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -375,10 +381,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="m9G-cJ-PCa" firstAttribute="top" secondItem="RCn-TB-CvU" secondAttribute="bottom" constant="100" id="0xs-Oq-7Rd"/>
+                            <constraint firstItem="t8e-Ja-j0z" firstAttribute="leading" secondItem="pn7-U1-I6E" secondAttribute="leading" constant="133" id="520-1H-bpk"/>
                             <constraint firstItem="RCn-TB-CvU" firstAttribute="leading" secondItem="pn7-U1-I6E" secondAttribute="leadingMargin" id="HiO-Aw-fON"/>
                             <constraint firstItem="RCn-TB-CvU" firstAttribute="top" secondItem="Z0B-Yz-lrb" secondAttribute="bottom" constant="8" symbolic="YES" id="Ns6-7m-ns3"/>
                             <constraint firstItem="RCn-TB-CvU" firstAttribute="centerX" secondItem="Z0B-Yz-lrb" secondAttribute="centerX" id="SsA-kR-yNc"/>
                             <constraint firstItem="RCn-TB-CvU" firstAttribute="trailing" secondItem="pn7-U1-I6E" secondAttribute="trailingMargin" id="ari-zA-3Wk"/>
+                            <constraint firstAttribute="centerX" secondItem="RCn-TB-CvU" secondAttribute="centerX" id="o3k-mU-J5R"/>
+                            <constraint firstItem="t8e-Ja-j0z" firstAttribute="top" secondItem="BTp-GD-rUs" secondAttribute="bottom" constant="29" id="vX3-4j-kpY"/>
+                            <constraint firstItem="Z0B-Yz-lrb" firstAttribute="top" secondItem="t8e-Ja-j0z" secondAttribute="bottom" constant="26" id="zOc-33-sA9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="tm5-nV-o4h"/>
@@ -533,7 +543,7 @@
                         <outlet property="photoImageView" destination="yJf-nN-g8h" id="FO1-ZP-5qr"/>
                         <outlet property="settingsBarButtonItem" destination="WTO-Fs-f80" id="VHS-7T-rAC"/>
                         <segue destination="bpC-Bn-hZ3" kind="show" identifier="homeToProfileSegue" id="zp4-qK-Gcr"/>
-                        <segue destination="QJ7-NT-5RD" kind="showDetail" identifier="homeToMatchSegue" id="MSY-cR-Jzo"/>
+                        <segue destination="QJ7-NT-5RD" kind="custom" identifier="homeToMatchSegue" id="MSY-cR-Jzo"/>
                         <segue destination="pSb-I4-2Ef" kind="show" identifier="homeToMatchesSegue" id="pfh-sD-fU5"/>
                     </connections>
                 </viewController>
@@ -544,7 +554,7 @@
         <!--Match View Controller-->
         <scene sceneID="9dn-Ou-FJN">
             <objects>
-                <viewController id="QJ7-NT-5RD" customClass="MatchViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="matchVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QJ7-NT-5RD" customClass="MatchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="g5J-pc-XMb"/>
                         <viewControllerLayoutGuide type="bottom" id="ggo-25-nff"/>
