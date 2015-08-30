@@ -8,7 +8,7 @@
 
 #import "EditProfileViewController.h"
 
-@interface EditProfileViewController ()
+@interface EditProfileViewController () <UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveBarButton;
 @property (strong, nonatomic) IBOutlet UITextView *tagLineTextView;
@@ -19,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tagLineTextView.delegate = self;
+    self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
     // Do any additional setup after loading the view.
     PFQuery *query = [PFQuery queryWithClassName:kPhotoClassKey];
     [query whereKey:kPhotoUserKey equalTo:[PFUser currentUser]];
@@ -52,14 +54,20 @@
     // Pass the selected object to the new view controller.
 }
 */
-#pragma mark -IBActions
-- (IBAction)saveBarButtonItemPressed:(UIBarButtonItem *)sender
-{
-    [[PFUser currentUser] setObject:self.tagLineTextView.text forKey:kUserTagLineKey];
-    [[PFUser currentUser] saveInBackground];
-    [self.navigationController popViewControllerAnimated:YES];
-}
+#pragma mark -TextViewDelegate
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"])
+    {
+        [self.tagLineTextView resignFirstResponder]; //keyboard go away
+        [[PFUser currentUser] setObject:self.tagLineTextView.text forKey:kUserTagLineKey];
+        [[PFUser currentUser] saveInBackground];
+        [self.navigationController popViewControllerAnimated:YES];
+        return NO;
+    }
+    return YES;
+}
 
 
 @end

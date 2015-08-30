@@ -32,15 +32,19 @@
 
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
+    
+    self.delegate = self;
+    self.dataSource = self;
+    
     [super viewDidLoad];
     
     [self checkForNewChats];
     // Do any additional setup after loading the view.
-    self.delegate = self;
-    self.dataSource = self;
+
     
-    [[JSBubbleView appearance] setFont:[UIFont systemFontOfSize:16.0f]];
+    [[JSBubbleView appearance] setFont:[UIFont fontWithName:@"HelveticaNeue" size:17.0f]];
     self.messageInputView.textView.placeHolder = @"New Message";
     [self setBackgroundColor:[UIColor whiteColor]];
     
